@@ -141,6 +141,7 @@ static const char *colorname[] = {
   [256] = "#111111", /* background */
   [257] = "#f0f0f0", /* foreground */
   [258] = "#111111", /* altbackground */
+  [259] = "#f0f0f0", /* altbackground */
 };
 
 
@@ -150,8 +151,8 @@ static const char *colorname[] = {
  */
 unsigned int defaultfg = 257;
 unsigned int defaultbg = 256;
-static unsigned int defaultcs = 257;
-static unsigned int defaultrcs = 257;
+static unsigned int defaultcs = 259;
+static unsigned int defaultrcs = 259;
 unsigned int bg = 256, bgUnfocused = 258;
 
 /*
@@ -214,8 +215,8 @@ ResourcePref resources[] = {
 		{ "color15",      STRING,  &colorname[15] },
 		{ "background",   STRING,  &colorname[256] },
 		{ "foreground",   STRING,  &colorname[257] },
-		{ "cursorColor",  STRING,  &colorname[257] },
 		{ "altbackground",STRING,  &colorname[258] },
+		{ "cursorColor",  STRING,  &colorname[259] },
 		{ "termname",     STRING,  &termname },
 		{ "shell",        STRING,  &shell },
 		{ "blinktimeout", INTEGER, &blinktimeout },
