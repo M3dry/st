@@ -150,8 +150,6 @@ static const char *colorname[] = {
   [257] = "#f0f0f0", /* foreground */
   [258] = "#111111", /* altbackground */
   [259] = "#f0f0f0", /* altbackground */
-  [260] = "#1e1c31", /* selection background */
-  [261] = "#ff5370", /* selection foreground */
 };
 
 
@@ -161,16 +159,9 @@ static const char *colorname[] = {
  */
 unsigned int defaultfg = 257;
 unsigned int defaultbg = 256;
-unsigned int bg = 256, bgUnfocused = 258;
 static unsigned int defaultcs = 259;
-static unsigned int defaultrcs = 256;
-
-/* Colors used for selection */
-unsigned int selectionbg = 260;
-unsigned int selectionfg = 261;
-/* If 0 use selectionfg as foreground in order to have a uniform foreground-color */
-/* Else if 1 keep original foreground-color of each cell => more colors :) */
-static int ignoreselfg = 0;
+static unsigned int defaultrcs = 259;
+unsigned int bg = 256, bgUnfocused = 258;
 
 /*
  * Default shape of cursor
@@ -234,9 +225,6 @@ ResourcePref resources[] = {
 		{ "foreground",   STRING,  &colorname[257] },
 		{ "altbackground",STRING,  &colorname[258] },
 		{ "cursorColor",  STRING,  &colorname[259] },
-		{ "selectionbg",  STRING,  &colorname[260] },
-		{ "selectionfg",  STRING,  &colorname[261] },
-		{ "ignoreselfg",  INTEGER, &ignoreselfg },
 		{ "termname",     STRING,  &termname },
 		{ "shell",        STRING,  &shell },
 		{ "blinktimeout", INTEGER, &blinktimeout },

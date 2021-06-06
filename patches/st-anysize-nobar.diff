@@ -1,0 +1,14 @@
+--- x.old.c	2019-06-10 15:01:10.547964499 +0100
++++ x.c	2019-06-10 15:02:21.015962417 +0100
+@@ -1843,6 +1843,11 @@
+ 					(handler[ev.type])(&ev);
+ 			}
+ 
++      /* Refresh before drawing */
++      cresize(0, 0);
++      redraw();
++      xhints();
++
+ 			draw();
+ 			XFlush(xw.dpy);
+ 

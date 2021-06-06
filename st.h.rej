@@ -1,0 +1,10 @@
+--- st.h	2020-06-19 14:59:45.000000000 +0530
++++ st.h	2020-07-20 19:39:32.310996650 +0530
+@@ -33,6 +33,7 @@ enum glyph_attribute {
+ 	ATTR_WRAP       = 1 << 8,
+ 	ATTR_WIDE       = 1 << 9,
+ 	ATTR_WDUMMY     = 1 << 10,
++        ATTR_SELECTED   = 1 << 11,
+ 	ATTR_BOLD_FAINT = ATTR_BOLD | ATTR_FAINT,
+ };
+ 
