@@ -9,7 +9,7 @@
  */
 static char *font = "Operator Mono SSm Lig:pixelsize=17:antialias=true:autohint=true";
 static char *font2[] = { "JoyPixels:pixelsize=15:antialias=true:autohint=true" };
-static int borderperc = 20;
+static int borderperc = 0;
 
 /* disable bold, italic and roman fonts globally */
 int disablebold = 0;
@@ -75,7 +75,7 @@ static uint su_timeout = 200;
  * blinking timeout (set to 0 to disable blinking) for the terminal blinking
  * attribute.
  */
-static unsigned int blinktimeout = 800;
+static unsigned int blinktimeout = 600;
 
 /*
  * thickness of underline and bar cursors
@@ -173,13 +173,21 @@ unsigned int selectionfg = 261;
 static int ignoreselfg = 0;
 
 /*
- * Default shape of cursor
- * 2: Block ("â–ˆ")
- * 4: Underline ("_")
- * 6: Bar ("|")
- * 7: Snowman ("â˜ƒ")
+ * https://invisible-island.net/xterm/ctlseqs/ctlseqs.html#h4-Functions-using-CSI-_-ordered-by-the-final-character-lparen-s-rparen:CSI-Ps-SP-q.1D81
+ * Default style of cursor
+ * 0: Blinking block
+ * 1: Blinking block (default)
+ * 2: Steady block ("█")
+ * 3: Blinking underline
+ * 4: Steady underline ("_")
+ * 5: Blinking bar
+ * 6: Steady bar ("|")
+ * 7: Blinking st cursor
+ * 8: Steady st cursor
  */
-static unsigned int cursorshape = 2;
+
+static unsigned int cursorstyle = 5;
+static Rune stcursor = 0x2603; /* snowman (U+2603) */
 
 /*
  * Default columns and rows numbers
@@ -237,14 +245,7 @@ ResourcePref resources[] = {
 		{ "selectionbg",  STRING,  &colorname[260] },
 		{ "selectionfg",  STRING,  &colorname[261] },
 		{ "ignoreselfg",  INTEGER, &ignoreselfg },
-		{ "termname",     STRING,  &termname },
-		{ "shell",        STRING,  &shell },
-		{ "blinktimeout", INTEGER, &blinktimeout },
-		{ "bellvolume",   INTEGER, &bellvolume },
-		{ "tabspaces",    INTEGER, &tabspaces },
 		{ "borderpx",     INTEGER, &borderperc },
-		{ "cwscale",      FLOAT,   &cwscale },
-		{ "chscale",      FLOAT,   &chscale },
 		{ "alpha",        FLOAT,   &alpha },
 		{ "alphaUnfocused",FLOAT,  &alphaUnfocused },
 };
@@ -288,7 +289,9 @@ static Shortcut shortcuts[] = {
 	{ MODKEY,               XK_y,           externalpipe,   {.v = copyurlcmd } },
 	{ MODKEY,               XK_o,           externalpipe,   {.v = copyoutput } },
 	{ TERMMOD,              XK_X,           invert,         { } },
-	{ TERMMOD,              XK_Return,      newterm,        {.i =  0} },
+	{ TERMMOD,              XK_Return,      newterm,        {.i = 0} },
+	{ MODKEY,               XK_k,           kscrollup,      {.i = 1} },
+	{ MODKEY,               XK_j,           kscrolldown,    {.i = 1} },
 };
 
 /*
