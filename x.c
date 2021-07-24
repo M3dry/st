@@ -749,8 +749,10 @@ brelease(XEvent *e)
 
 	if (mouseaction(e, 1))
 		return;
-	if (e->xbutton.button == Button1)
+	if (e->xbutton.button == Button1) {
 		mousesel(e, 1);
+        openUrlOnClick(evcol(e), evrow(e), url_opener);
+    }
 }
 
 void
@@ -841,17 +843,6 @@ xloadalpha(void)
 	dc.col[defaultbg].color.alpha = (unsigned short)(0xffff * usedAlpha);
 	dc.col[defaultbg].pixel &= 0x00FFFFFF;
 	dc.col[defaultbg].pixel |= (unsigned char)(0xff * usedAlpha) << 24;
-
-	/* set alpha value of selbg color */
-	dc.col[selectionbg].color.alpha = (unsigned short)(0xffff * alpha);
-	dc.col[selectionbg].color.red =
-		((unsigned short)(dc.col[selectionbg].color.red * alpha)) & 0xff00;
-	dc.col[selectionbg].color.green =
-		((unsigned short)(dc.col[selectionbg].color.green * alpha)) & 0xff00;
-	dc.col[selectionbg].color.blue =
-		((unsigned short)(dc.col[selectionbg].color.blue * alpha)) & 0xff00;
-	dc.col[selectionbg].pixel &= 0x00FFFFFF;
-	dc.col[selectionbg].pixel |= (unsigned char)(0xff * alpha) << 24;
 }
 
 void
