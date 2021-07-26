@@ -9,7 +9,7 @@
  */
 static char *font = "Operator Mono SSm Lig:pixelsize=17:antialias=true:autohint=true";
 static char *font2[] = { "JoyPixels:pixelsize=15:antialias=true:autohint=true" };
-static int borderperc = 0;
+static int borderperc = 10;
 
 /* disable bold, italic and roman fonts globally */
 int disablebold = 0;
@@ -268,10 +268,6 @@ static MouseShortcut mshortcuts[] = {
 	{ XK_ANY_MOD,           Button5, ttysend,        {.s = "\005"} },
 };
 
-static char *openurlcmd[] = { "/bin/sh", "-c", "st-urlhandler -o", "externalpipe", NULL };
-static char *copyurlcmd[] = { "/bin/sh", "-c", "st-urlhandler -c", "externalpipe", NULL };
-static char *copyoutput[] = { "/bin/sh", "-c", "st-copyout", "externalpipe", NULL };
-
 static Shortcut shortcuts[] = {
 	/* mask                 keysym          function        argument */
 	{ XK_ANY_MOD,           XK_Break,       sendbreak,      {.i = 0} },
@@ -286,9 +282,6 @@ static Shortcut shortcuts[] = {
 	{ TERMMOD,              XK_K,           zoom,           {.f = +1} },
 	{ TERMMOD,              XK_J,           zoom,           {.f = -1} },
 	{ TERMMOD,              XK_U,           zoomreset,      {.f = 0} },
-	{ TERMMOD,              XK_L,           externalpipe,   {.v = openurlcmd } },
-	{ MODKEY,               XK_y,           externalpipe,   {.v = copyurlcmd } },
-	{ MODKEY,               XK_o,           externalpipe,   {.v = copyoutput } },
 	{ TERMMOD,              XK_X,           invert,         { } },
 	{ TERMMOD,              XK_Return,      newterm,        {.i = 0} },
 	{ MODKEY,               XK_k,           kscrollup,      {.i = 1} },

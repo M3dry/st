@@ -2383,20 +2383,37 @@ resource_load(XrmDatabase db, char *name, enum resource_type rtype, void *dst)
 }
 
 void
-config_init(void)
+config_init(Display *dpy)
 {
 	char *resm;
 	XrmDatabase db;
 	ResourcePref *p;
 
 	XrmInitialize();
-	resm = XResourceManagerString(xw.dpy);
+	resm = XResourceManagerString(dpy);
 	if (!resm)
 		return;
 
 	db = XrmGetStringDatabase(resm);
 	for (p = resources; p < resources + LEN(resources); p++)
 		resource_load(db, p->name, p->type, p->dst);
+}
+
+void
+reload_config(int sig)
+{
+	/* Recreate a Display object to have up to date Xresources entries */
+	Display *dpy;
+	if (!(dpy = XOpenDisplay(NULL)))
+		die("Can't open display\n");
+
+	config_init(dpy);
+	if (sig != -1) {
+		/* Called due to a SIGUSR1 */
+		xloadcols();
+		redraw();
+	}
+	signal(SIGUSR1, reload_config);
 }
 
 void
@@ -2482,7 +2499,8 @@ run:
 	if(!(xw.dpy = XOpenDisplay(NULL)))
 		die("Can't open display\n");
 
-	config_init();
+	config_init(xw.dpy);
+	signal(SIGUSR1, reload_config);
 	cols = MAX(cols, 1);
 	rows = MAX(rows, 1);
 	defaultbg = MAX(LEN(colorname), 256);
