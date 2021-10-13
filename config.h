@@ -16,6 +16,11 @@ int disablebold = 0;
 int disableitalic = 0;
 int disableroman = 0;
 
+#define UNDERCURL_CURLY 0
+#define UNDERCURL_SPIKY 1
+#define UNDERCURL_CAPPED 2
+#define UNDERCURL_STYLE UNDERCURL_SPIKY
+
 /*
  * What program is execed by st depends of these precedence rules:
  * 1: program passed with -e

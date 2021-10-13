@@ -1100,14 +1100,26 @@ int tisaltscr(void)
 void
 newterm(const Arg* a)
 {
+    int res;
+
 	switch (fork()) {
 	case -1:
 		die("fork failed: %s\n", strerror(errno));
 		break;
 	case 0:
-		chdir(getcwd_by_pid(pid));
-		execlp("st", "./st", NULL);
-		break;
+		switch (fork()) {
+		case -1:
+			die("fork failed: %s\n", strerror(errno));
+			break;
+		case 0:
+			res = chdir(getcwd_by_pid(pid));
+			execlp("st", "./st", NULL);
+			break;
+		default:
+			exit(0);
+		}
+	default:
+		wait(NULL);
 	}
 }
 
@@ -2855,13 +2867,13 @@ openUrlOnClick(int col, int row, char* url_opener)
            col_start = 0;
            row_start++;
        }
-   } while (row_start != row_end || col_start != col_end);
+   } while (url_index < (sizeof(url)-1) && (row_start != row_end || col_start != col_end));
 
    if (strncmp("http", url, 4) != 0) {
        return;
    }
 
-   char command[strlen(url_opener)+1+strlen(url)];
+   char command[strlen(url_opener)+strlen(url)+2];
    sprintf(command, "%s %s", url_opener, url);
 
    system(command);
