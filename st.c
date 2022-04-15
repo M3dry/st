@@ -829,14 +829,15 @@ ttynew(char *line, char *cmd, char *out, char **args)
 		break;
 	case 0:
 		close(iofd);
+        close(m);
 		setsid(); /* create a new process group */
 		dup2(s, 0);
 		dup2(s, 1);
 		dup2(s, 2);
 		if (ioctl(s, TIOCSCTTY, NULL) < 0)
 			die("ioctl TIOCSCTTY failed: %s\n", strerror(errno));
-		close(s);
-		close(m);
+        if (s > 2)
+            close(s);
 #ifdef __OpenBSD__
 		if (pledge("stdio getpw proc exec", NULL) == -1)
 			die("pledge\n");
@@ -2615,8 +2616,10 @@ check_control_code:
 	if (width == 2) {
 		gp->mode |= ATTR_WIDE;
 		if (term.c.x+1 < term.col) {
-			gp[1].u = '\0';
-			gp[1].mode = ATTR_WDUMMY;
+            if (gp[1].mode == ATTR_WIDE && term.c.x+2 < term.col) {
+                gp[2].u = ' ';
+                gp[2].mode &= ~ATTR_WDUMMY;
+            }
 		}
 	}
 	if (term.c.x+width < term.col) {

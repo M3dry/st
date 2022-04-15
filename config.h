@@ -7,8 +7,11 @@
  * borderperc: percentage of cell width to use as a border
  *		0 = no border, 100 = border width is same as cell width
  */
-static char *font = "Operator Mono SSm Lig:pixelsize=17:antialias=true:autohint=true";
-static char *font2[] = { "JoyPixels:pixelsize=15:antialias=true:autohint=true" };
+//static char *font = "Operator Mono SSm Lig:pixelsize=17:antialias=true:autohint=true";
+static char *font = "Operator Mono SSm Lig Book:pixelsize=12:antialias=true:autohint=true";
+static char *font2[] = {
+    "JoyPixels:pixelsize=15:antialias=true:autohint=true"
+};
 static int borderperc = 10;
 
 /* disable bold, italic and roman fonts globally */
