@@ -10,7 +10,8 @@
 //static char *font = "Operator Mono SSm Lig:pixelsize=17:antialias=true:autohint=true";
 static char *font = "Operator Mono SSm Lig Book:pixelsize=12:antialias=true:autohint=true";
 static char *font2[] = {
-    "JoyPixels:pixelsize=15:antialias=true:autohint=true"
+    "JoyPixels:pixelsize=15:antialias=true:autohint=true",
+    "codicon:pixelsize=14:antialias=true:autohint=true"
 };
 static int borderperc = 10;
 
