@@ -1387,6 +1387,7 @@ xinit(int cols, int rows)
 	XSetWMProtocols(xw.dpy, xw.win, &xw.wmdeletewin, 1);
 
 	/* use a png-image to set _NET_WM_ICON */
+	printf(ICON);
 	FILE* file = fopen(ICON, "r");
 	if (file) {
 		/* load image in rgba-format */
